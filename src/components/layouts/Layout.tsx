@@ -20,13 +20,13 @@ const Layout = () => {
                         <NavLink to={"/dashboard/notifications"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
                             <span className="hidden md:block">Notifications</span>
                         </NavLink>
-                        <NavLink to={"/dashboard/expense"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
+                        <NavLink to={"/dashboard/trips"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
                             <span className="hidden md:block">Trips</span>
                         </NavLink>
-                        <NavLink to={"/dashboard/transactions"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
+                        <NavLink to={"/dashboard/vendors"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
                             <span className="hidden md:block">Vendors</span>
                         </NavLink>
-                        <NavLink to={"/dashboard/transactions"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
+                        <NavLink to={"/dashboard/payments"} className={({ isActive }) => `flex items-center gap-2 p-1 sm:p-2 m-1 font-semibold rounded-md text-sm lg:text-base ${isActive ? "bg-primary/15 text-primary" : "text-zinc-600"} `}>
                             <span className="hidden md:block">Payments</span>
                         </NavLink>
                     </div>

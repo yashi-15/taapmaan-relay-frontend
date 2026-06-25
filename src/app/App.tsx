@@ -3,6 +3,7 @@ import Login from "../pages/auth/Login"
 import Layout from "../components/layouts/Layout"
 import Dashboard from "../components/pages/Dashboard"
 import Notifications from "../components/pages/Notifications"
+import Trips from "../components/pages/Trips"
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="expense" element={<></>} />
+          <Route path="trips" element={<Trips />} />
           <Route path="transactions" element={<></>} />
         </Route>
       </Routes>
