@@ -16,7 +16,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="trips" element={<Trips />} />
-          <Route path="transactions" element={<></>} />
+          <Route path="load-board" element={<></>} />
+          <Route path="payments" element={<></>} />
         </Route>
       </Routes>
     </BrowserRouter >

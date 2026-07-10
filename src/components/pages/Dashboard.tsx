@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BarChartGraph from "../elements/graphs/BarChartGraph";
 
 const Dashboard = () => {
     
@@ -61,7 +62,7 @@ const Dashboard = () => {
                             See All {" "}
                         </Link>
                     </div>
-                    <div className="p-3 lg:p-4 grid grid-cols-2 justify-center items-center">
+                    <div className="p-3 lg:p-4 grid grid-cols-2 gap-8 justify-center items-center">
                         <div>
                             <h4 className="font-bold text-center">₹12,718,763.58</h4>
                             <p className="text-center text-sm">YTD (GROSS)</p>
@@ -69,6 +70,9 @@ const Dashboard = () => {
                         <div>
                             <h4 className="font-bold text-center">₹0.00</h4>
                             <p className="text-center text-sm">NET BALANCE</p>
+                        </div>
+                        <div className="col-span-2">
+                            <BarChartGraph />
                         </div>
                     </div>
                 </div>
