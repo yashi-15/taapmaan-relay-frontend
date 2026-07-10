@@ -4,6 +4,7 @@ import Layout from "../components/layouts/Layout"
 import Dashboard from "../components/pages/Dashboard"
 import Notifications from "../components/pages/Notifications"
 import Trips from "../components/pages/Trips"
+import ComingSoon from "../components/pages/ComingSoon"
 
 function App() {
 
@@ -16,8 +17,9 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="trips" element={<Trips />} />
-          <Route path="load-board" element={<></>} />
-          <Route path="payments" element={<></>} />
+          <Route path="load-board" element={<ComingSoon/>} />
+          <Route path="scorecard" element={<ComingSoon/>} />
+          <Route path="payments" element={<ComingSoon/>} />
         </Route>
       </Routes>
     </BrowserRouter >

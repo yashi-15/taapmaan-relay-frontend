@@ -662,17 +662,17 @@ function StopInstructions({ stop }: { stop: Stop }) {
 
 function StopsTable({ stops }: { stops: Stop[] }) {
   return (
-    <div className="bg-white">
-      <div className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-4 px-4 py-2 border-b border-gray-200 text-[12px] font-semibold text-gray-600">
+    <div className="bg-white ml-12">
+      <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 px-4 py-2 border-b border-gray-200 text-[12px] font-semibold text-gray-600">
         <div>Stop</div>
         <div>Equipment</div>
         <div>Arrival</div>
         <div>Departure</div>
       </div>
-      <div className="divide-y divide-gray-100">
+      <div className="divide-y divide-gray-100 font-medium">
         {stops.map((stop) => (
           <div key={stop.id} className="px-4 py-3">
-            <div className="grid grid-cols-[1fr_1fr_1fr_1fr] gap-4 items-start">
+            <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 items-start">
               <div className="flex items-start gap-2 min-w-0">
                 <StopBadge sequence={stop.sequence} />
                 <div className="min-w-0">
@@ -705,9 +705,9 @@ function ShipmentRow({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b border-gray-100 last:border-b-0">
+    <div className="m-2 border-b border-gray-100 last:border-b-0">
       <div
-        className="grid grid-cols-[1.5fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center px-4 py-3 bg-gray-50 hover:bg-gray-100 cursor-pointer"
+        className="grid grid-cols-[1.5fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center px-4 py-3 bg-gray-50 hover:bg-gray-100 cursor-pointer font-medium"
         onClick={onToggle}
       >
         <button
@@ -772,10 +772,10 @@ function TripCard({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-gray-200 rounded-md bg-white overflow-hidden mb-4">
+    <div className="border border-gray-200 rounded-md bg-white overflow-hidden mb-2">
       {/* trip summary header (click to expand/collapse the whole trip) */}
       <div
-        className="flex items-center gap-3 px-4 py-3 cursor-pointer"
+        className="flex items-center gap-3 px-4 py-2 cursor-pointer"
         onClick={() => setOpen((o) => !o)}
       >
         {open ? (
@@ -784,7 +784,7 @@ function TripCard({
           <ChevronRight size={16} className="text-gray-400 shrink-0" />
         )}
 
-        <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center flex-1 min-w-0">
+        <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center flex-1 min-w-0 font-medium">
           <div>
             <div className="text-[14px] font-semibold text-secondary">{trip.contractCode}</div>
             <div className="text-[11.5px] text-gray-400">Expires in --</div>

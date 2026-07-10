@@ -10,6 +10,7 @@ const Layout = () => {
             { slug: "/dashboard/notifications", name: "Notifications" },
             { slug: "/dashboard/trips", name: "Trips" },
             { slug: "/dashboard/load-board", name: "Load Board" },
+            { slug: "/dashboard/scorecard", name: "Scorecard" },
             { slug: "/dashboard/payments", name: "Payments" },
         ],
         admin: [

@@ -43,14 +43,16 @@ const Dashboard = () => {
                             See All {" "}
                         </Link>
                     </div>
-                    <div className="p-3 lg:p-4">
+                    <div className="p-3 lg:p-4 flex flex-col gap-10">
                         <div>
                             <h2 className="text-xs md:text-sm lg:text-base">Overall Score</h2>
                             <p className="text-2xl text-secondary">23.7%</p>
                         </div>
+                        <div>
                         <div className="mt-1 p-3 bg-light-primary/25">On Time <span className="font-bold">79.4%</span></div>
                         <div className="mt-1 p-3 bg-light-primary/25">Tech Usage <span className="font-bold">79.4%</span></div>
                         <div className="mt-1 p-3 bg-light-primary/25">Disruption Free <span className="font-bold">79.4%</span></div>
+                        </div>
                     </div>
                 </div>
                 <div className="rounded-md bg-white shadow-md">
@@ -62,7 +64,7 @@ const Dashboard = () => {
                             See All {" "}
                         </Link>
                     </div>
-                    <div className="p-3 lg:p-4 grid grid-cols-2 gap-8 justify-center items-center">
+                    <div className="p-3 lg:p-4 grid grid-cols-2 gap-10 justify-center items-center">
                         <div>
                             <h4 className="font-bold text-center">₹12,718,763.58</h4>
                             <p className="text-center text-sm">YTD (GROSS)</p>
