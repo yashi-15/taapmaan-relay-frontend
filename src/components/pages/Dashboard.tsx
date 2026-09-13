@@ -13,7 +13,7 @@ const Dashboard = () => {
     };
 
     // TODO: fetch from vehicles schema — count of vehicles with status === "idle"
-    const idleTrucksCount = 7;
+    const idleTrucksCount: number = 7;
 
     const recentlyCompletedTrips = [
         { id: "TRP-2201", route: "Delhi → Jaipur", vehicle: "DL 1AB 2345", completedOn: "28 Aug 2026" },
