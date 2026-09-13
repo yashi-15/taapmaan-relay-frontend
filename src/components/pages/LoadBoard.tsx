@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo, type ChangeEvent } from "react";
 import {
   Plus,
   Truck,
@@ -13,35 +13,78 @@ import {
 } from "lucide-react";
 import { VehicleTypeBadge } from "../elements/VehicleBadges";
 
-
 // ---------------------------------------------------------------------------
 // Mock data — replace with real vendor resources + API calls when wiring up
 // ---------------------------------------------------------------------------
-const VENDOR_VEHICLES = [
+
+type TruckType = "Frozen" | "Chiller" | "Dry";
+type PostingStatus = "Active" | "Matched" | "Expired";
+
+interface VendorVehicle {
+  id: string;
+  number: string;
+  type: TruckType;
+}
+
+interface VendorDriver {
+  id: string;
+  name: string;
+  phone: string;
+}
+
+interface Posting {
+  id: string;
+  vehicleNumber: string;
+  vehicleType: TruckType;
+  driverName: string;
+  origin: string;
+  destination: string;
+  availableFrom: string;
+  availableUntil: string;
+  capacity: string;
+  rate: string;
+  status: PostingStatus;
+}
+
+interface PostingForm {
+  vehicleId: string;
+  driverId: string;
+  origin: string;
+  destination: string;
+  availableFrom: string;
+  availableUntil: string;
+  capacity: string;
+  rate: string;
+  notes: string;
+}
+
+type FormErrors = Partial<Record<keyof PostingForm, boolean>>;
+
+const VENDOR_VEHICLES: VendorVehicle[] = [
   { id: "v1", number: "MH-04-GT-2216", type: "Frozen" },
   { id: "v2", number: "MH-12-AB-7741", type: "Chiller" },
   { id: "v3", number: "GJ-01-JK-9002", type: "Dry" },
 ];
 
-const VENDOR_DRIVERS = [
+const VENDOR_DRIVERS: VendorDriver[] = [
   { id: "d1", name: "Ramesh Yadav", phone: "98xxxxxx12" },
   { id: "d2", name: "Suresh Pawar", phone: "97xxxxxx45" },
   { id: "d3", name: "Irfan Sheikh", phone: "99xxxxxx88" },
 ];
 
-const TRUCK_TYPES = [
+const TRUCK_TYPES: { value: TruckType; icon: typeof Snowflake }[] = [
   { value: "Frozen", icon: Snowflake },
   { value: "Chiller", icon: Thermometer },
   { value: "Dry", icon: Package },
 ];
 
-const STATUS_STYLES = {
+const STATUS_STYLES: Record<PostingStatus, { dot: string; text: string }> = {
   Active: { dot: "bg-[#0B6E4F]", text: "text-[#0B6E4F]" },
   Matched: { dot: "bg-[#B4690E]", text: "text-[#B4690E]" },
   Expired: { dot: "bg-[#8A9299]", text: "text-[#8A9299]" },
 };
 
-const INITIAL_POSTINGS = [
+const INITIAL_POSTINGS: Posting[] = [
   {
     id: "p1",
     vehicleNumber: "MH-14-CD-5590",
@@ -70,7 +113,7 @@ const INITIAL_POSTINGS = [
   },
 ];
 
-const emptyForm = {
+const emptyForm: PostingForm = {
   vehicleId: "",
   driverId: "",
   origin: "",
@@ -82,15 +125,15 @@ const emptyForm = {
   notes: "",
 };
 
-function formatWindow(from, until) {
-  const opts = { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" };
+function formatWindow(from: string, until: string): string {
+  const opts: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" };
   const f = new Date(from);
   const u = new Date(until);
-  const fmt = (d) => d.toLocaleString("en-IN", opts).replace(",", "");
+  const fmt = (d: Date) => d.toLocaleString("en-IN", opts).replace(",", "");
   return `${fmt(f)} → ${fmt(u)}`;
 }
 
-export function TypeBadge({ type }) {
+export function TypeBadge({ type }: { type: TruckType }) {
   const meta = TRUCK_TYPES.find((t) => t.value === type) || TRUCK_TYPES[2];
   const Icon = meta.icon;
   return (
@@ -102,22 +145,23 @@ export function TypeBadge({ type }) {
 }
 
 export default function LoadBoard() {
-  const [postings, setPostings] = useState(INITIAL_POSTINGS);
+  const [postings, setPostings] = useState<Posting[]>(INITIAL_POSTINGS);
   const [formOpen, setFormOpen] = useState(false);
-  const [form, setForm] = useState(emptyForm);
-  const [errors, setErrors] = useState({});
+  const [form, setForm] = useState<PostingForm>(emptyForm);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const selectedVehicle = useMemo(
     () => VENDOR_VEHICLES.find((v) => v.id === form.vehicleId),
     [form.vehicleId]
   );
 
-  const setField = (key) => (e) =>
-    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+  const setField = (key: keyof PostingForm) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+      setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const validate = () => {
-    const req = ["vehicleId", "driverId", "origin", "availableFrom", "availableUntil", "capacity"];
-    const next = {};
+  const validate = (): boolean => {
+    const req: (keyof PostingForm)[] = ["vehicleId", "driverId", "origin", "availableFrom", "availableUntil", "capacity"];
+    const next: FormErrors = {};
     req.forEach((k) => {
       if (!form[k]) next[k] = true;
     });
@@ -136,7 +180,9 @@ export default function LoadBoard() {
     if (!validate()) return;
     const vehicle = VENDOR_VEHICLES.find((v) => v.id === form.vehicleId);
     const driver = VENDOR_DRIVERS.find((d) => d.id === form.driverId);
-    const newPosting = {
+    if (!vehicle || !driver) return;
+
+    const newPosting: Posting = {
       id: `p${Date.now()}`,
       vehicleNumber: vehicle.number,
       vehicleType: vehicle.type,
@@ -154,12 +200,12 @@ export default function LoadBoard() {
     setFormOpen(false);
   };
 
-  const withdraw = (id) =>
+  const withdraw = (id: string) =>
     setPostings((prev) => prev.filter((p) => p.id !== id));
 
   const activeCount = postings.filter((p) => p.status === "Active").length;
 
-  const inputCls = (key) =>
+  const inputCls = (key: keyof PostingForm) =>
     `w-full rounded-[3px] border bg-white px-3 py-2 text-[13px] text-[#14181B] outline-none transition-colors focus:border-[#0B6E4F] ${
       errors[key] ? "border-[#C2402E]" : "border-[#E2E6E8]"
     }`;

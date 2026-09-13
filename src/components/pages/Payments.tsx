@@ -8,9 +8,6 @@ import {
   ChevronDown,
   ArrowUpDown,
   X,
-  Snowflake,
-  Thermometer,
-  Package,
 } from "lucide-react";
 import {
   duePayments as initialDue,

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import {
   Plus,
   Phone,
@@ -14,25 +14,44 @@ import {
   Trash2,
   Eye,
 } from "lucide-react";
-import { DRIVERS_MOCK } from "../../utils/driversMock";
+import {
+  DRIVERS_MOCK,
+  type Driver,
+  type DriverAvailabilityStatus,
+  type DriverVerificationStatus,
+} from "../../utils/driversMock";
 
 // ---------------------------------------------------------------------------
 // Status presentation — mirrors DriverAvailabilityStatus / DriverVerificationStatus
 // on the `Driver` Prisma model.
 // ---------------------------------------------------------------------------
-const AVAILABILITY_STYLES = {
+const AVAILABILITY_STYLES: Record<DriverAvailabilityStatus, { dot: string; text: string; label: string }> = {
   available: { dot: "bg-[#0B6E4F]", text: "text-[#0B6E4F]", label: "Available" },
   on_trip: { dot: "bg-[#B4690E]", text: "text-[#B4690E]", label: "On trip" },
   unavailable: { dot: "bg-[#8A9299]", text: "text-[#8A9299]", label: "Unavailable" },
 };
 
-const VERIFICATION_STYLES = {
+const VERIFICATION_STYLES: Record<DriverVerificationStatus, { icon: typeof ShieldCheck; text: string; bg: string; label: string }> = {
   verified: { icon: ShieldCheck, text: "text-[#0B6E4F]", bg: "bg-[#EAF5F0]", label: "Verified" },
   pending: { icon: ShieldQuestion, text: "text-[#B4690E]", bg: "bg-[#FBF1E6]", label: "Pending review" },
   rejected: { icon: ShieldAlert, text: "text-[#C2402E]", bg: "bg-[#FBEBE8]", label: "Rejected" },
 };
 
-const emptyForm = {
+interface DriverForm {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  licenseNumber: string;
+  dateOfBirth: string;
+  joiningDate: string;
+  address: string;
+  emergencyContact: string;
+}
+
+type FormErrors = Partial<Record<keyof DriverForm, boolean>>;
+
+const emptyForm: DriverForm = {
   firstName: "",
   lastName: "",
   phone: "",
@@ -44,18 +63,18 @@ const emptyForm = {
   emergencyContact: "",
 };
 
-function initials(firstName, lastName) {
+function initials(firstName: string, lastName: string): string {
   return `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase();
 }
 
-function formatDate(value) {
+function formatDate(value?: string | null): string {
   if (!value) return "—";
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return "—";
   return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-function VerificationBadge({ status }) {
+function VerificationBadge({ status }: { status: DriverVerificationStatus }) {
   const meta = VERIFICATION_STYLES[status] || VERIFICATION_STYLES.pending;
   const Icon = meta.icon;
   return (
@@ -66,7 +85,7 @@ function VerificationBadge({ status }) {
   );
 }
 
-function AvailabilityDot({ status }) {
+function AvailabilityDot({ status }: { status: DriverAvailabilityStatus }) {
   const meta = AVAILABILITY_STYLES[status] || AVAILABILITY_STYLES.unavailable;
   return (
     <span className="inline-flex items-center gap-1.5">
@@ -77,11 +96,11 @@ function AvailabilityDot({ status }) {
 }
 
 export default function Drivers() {
-  const [drivers, setDrivers] = useState(DRIVERS_MOCK);
+  const [drivers, setDrivers] = useState<Driver[]>(DRIVERS_MOCK);
   const [formOpen, setFormOpen] = useState(false);
-  const [form, setForm] = useState(emptyForm);
-  const [errors, setErrors] = useState({});
-  const [selectedDriverId, setSelectedDriverId] = useState(null);
+  const [form, setForm] = useState<DriverForm>(emptyForm);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [selectedDriverId, setSelectedDriverId] = useState<string | null>(null);
 
   const selectedDriver = useMemo(
     () => drivers.find((d) => d.id === selectedDriverId) || null,
@@ -90,11 +109,12 @@ export default function Drivers() {
 
   const verifiedCount = drivers.filter((d) => d.verificationStatus === "verified").length;
 
-  const setField = (key) => (e) =>
-    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+  const setField = (key: keyof DriverForm) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
-  const validate = () => {
-    const next = {};
+  const validate = (): boolean => {
+    const next: FormErrors = {};
     if (!form.firstName.trim()) next.firstName = true;
     if (!form.lastName.trim()) next.lastName = true;
     if (!/^\d{10}$/.test(form.phone.trim())) next.phone = true;
@@ -106,7 +126,7 @@ export default function Drivers() {
 
   const handleSubmit = () => {
     if (!validate()) return;
-    const newDriver = {
+    const newDriver: Driver = {
       id: `d${Date.now()}`,
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
@@ -128,12 +148,12 @@ export default function Drivers() {
     setFormOpen(false);
   };
 
-  const removeDriver = (id) => {
+  const removeDriver = (id: string) => {
     setDrivers((prev) => prev.filter((d) => d.id !== id));
     if (selectedDriverId === id) setSelectedDriverId(null);
   };
 
-  const inputCls = (key) =>
+  const inputCls = (key: keyof DriverForm) =>
     `w-full rounded-[3px] border bg-white px-3 py-2 text-[13px] text-[#14181B] outline-none transition-colors focus:border-[#0B6E4F] ${
       errors[key] ? "border-[#C2402E]" : "border-[#E2E6E8]"
     }`;
