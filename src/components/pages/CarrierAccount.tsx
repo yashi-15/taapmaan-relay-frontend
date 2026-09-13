@@ -81,21 +81,21 @@ const CarrierAccount: React.FC = () => {
 
     return (
         <div className="py-1 sm:py-3 flex flex-col gap-4">
-            <div className="flex gap-5 border-b border-slate-200">
+            <div className="flex gap-5 border-b border-slate-200 overflow-x-auto no-scrollbar">
                 <button type="button" onClick={() => setTab("company-info")}
-                    className={`w-32 pb-2 text-sm font-medium transition-colors ${tab === "company-info" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
+                    className={`shrink-0 whitespace-nowrap min-w-[110px] sm:w-32 pb-2 text-sm font-medium transition-colors ${tab === "company-info" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
                     Company Info
                 </button>
                 <button type="button" onClick={() => setTab("documents")}
-                    className={`w-32 pb-2 text-sm font-medium transition-colors ${tab === "documents" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
+                    className={`shrink-0 whitespace-nowrap min-w-[110px] sm:w-32 pb-2 text-sm font-medium transition-colors ${tab === "documents" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
                     Documents
                 </button>
                 <button type="button" onClick={() => setTab("payment-info")}
-                    className={`w-32 pb-2 text-sm font-medium transition-colors ${tab === "payment-info" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
+                    className={`shrink-0 whitespace-nowrap min-w-[110px] sm:w-32 pb-2 text-sm font-medium transition-colors ${tab === "payment-info" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
                     Payment Info
                 </button>
                 <button type="button" onClick={() => setTab("site-user")}
-                    className={`w-32 pb-2 text-sm font-medium transition-colors ${tab === "site-user" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
+                    className={`shrink-0 whitespace-nowrap min-w-[110px] sm:w-32 pb-2 text-sm font-medium transition-colors ${tab === "site-user" ? "border-b-2 border-primary text-primary font-semibold" : "text-zinc-500 hover:text-zinc-800"}`}>
                     Site User
                 </button>
             </div>

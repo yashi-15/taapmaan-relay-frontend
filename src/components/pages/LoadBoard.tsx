@@ -215,8 +215,7 @@ export default function LoadBoard() {
   return (
     <div className="w-full bg-white font-sans" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
       {/* Section header */}
-      <div className="flex items-start justify-between gap-4 border-b border-[#E2E6E8] px-6 py-5">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-start items-stretch justify-between gap-4 border-b border-[#E2E6E8] px-4 sm:px-6 py-5">        <div>
           <h2 className="text-[20px] font-semibold text-[#14181B]">Load board</h2>
           <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#5B6670]">
             Post a truck that's sitting idle and Taapmaan will match it to a booking
@@ -403,7 +402,8 @@ export default function LoadBoard() {
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-[3px] border border-[#E2E6E8]">
+          <div className="overflow-x-auto">
+          <div className="min-w-[900px] overflow-hidden rounded-[3px] border border-[#E2E6E8]">
             <div className="grid grid-cols-[1.3fr_1fr_1.6fr_1.8fr_0.9fr_0.9fr_40px] gap-3 border-b border-[#E2E6E8] bg-[#F6F7F8] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-[#5B6670]">
               <div>Vehicle / driver</div>
               <div>Type</div>
@@ -416,10 +416,8 @@ export default function LoadBoard() {
             {postings.map((p) => {
               const s = STATUS_STYLES[p.status];
               return (
-                <div
-                  key={p.id}
-                  className="grid grid-cols-[1.3fr_1fr_1.6fr_1.8fr_0.9fr_0.9fr_40px] items-center gap-3 border-b border-[#E2E6E8] px-4 py-3 text-[13px] text-[#14181B] last:border-b-0 hover:bg-[#FAFBFB]"
-                >
+                                <div key={p.id} className="grid grid-cols-[1.3fr_1fr_1.6fr_1.8fr_0.9fr_0.9fr_40px] items-center gap-3 border-b border-[#E2E6E8] px-4 py-3 text-[13px] text-[#14181B] last:border-b-0 hover:bg-[#FAFBFB]">
+
                   <div>
                     <div className="font-medium">{p.vehicleNumber}</div>
                     <div className="text-[12px] text-[#5B6670]">{p.driverName}</div>
@@ -458,6 +456,7 @@ export default function LoadBoard() {
                 </div>
               );
             })}
+          </div>
           </div>
         )}
       </div>

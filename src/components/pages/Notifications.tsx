@@ -6,8 +6,7 @@ import { FaRegCirclePause } from "react-icons/fa6";
 const Notifications = () => {
     const [tab, setTab] = useState("tasks")
 
-
-    const tasksData = [
+    const tasksData = [ /* unchanged */
         {
             "description": "Document access request for 113GK1BSC",
             "severity": "Critical",
@@ -106,7 +105,7 @@ const Notifications = () => {
         }
     ]
 
-    const notificationsData = [
+    const notificationsData = [ /* unchanged */
         {
             "description": "Critical Update: Government mandated fuel increase, effective from 15th May'26 onwards.",
             "severity": "High",
@@ -181,24 +180,24 @@ const Notifications = () => {
 
     return (
         <div className="py-1 sm:py-3 flex flex-col gap-4">
-            <div className="flex justify-end items-center gap-1"><CiSettings className="text-3xl" /><span>Notification settings</span></div>
-            <div className="flex justify-end items-center gap-2">
+            <div className="flex flex-wrap justify-end items-center gap-1"><CiSettings className="text-3xl" /><span>Notification settings</span></div>
+            <div className="flex flex-wrap justify-end items-center gap-2">
                 <div className="flex gap-2"><span>Next Refresh 4m 35s</span> <FaRegCirclePause className="text-2xl" /></div>
-                <div>|</div>
+                <div className="hidden sm:block">|</div>
                 <div><IoIosRefresh className="text-2xl" /></div>
             </div>
-            <div className="flex gap-5">
-                <button onClick={() => setTab("tasks")} className={`w-32 pb-2 ${tab === "tasks" ? 'border-b-4 border-primary' : 'border-b-0'}`}>Tasks</button>
-                <button onClick={() => setTab("notifications")} className={`w-32 pb-2 ${tab === "notifications" ? 'border-b-4 border-primary' : 'border-b-0'}`}>Notifications</button>
+            <div className="flex gap-5 overflow-x-auto no-scrollbar">
+                <button onClick={() => setTab("tasks")} className={`shrink-0 whitespace-nowrap min-w-[100px] sm:w-32 pb-2 ${tab === "tasks" ? 'border-b-4 border-primary' : 'border-b-0'}`}>Tasks</button>
+                <button onClick={() => setTab("notifications")} className={`shrink-0 whitespace-nowrap min-w-[100px] sm:w-32 pb-2 ${tab === "notifications" ? 'border-b-4 border-primary' : 'border-b-0'}`}>Notifications</button>
             </div>
 
 
             {/* TASKS  */}
             {tab === "tasks" && 
             <div>
-                <div className="flex gap-4 bg-[#f3f3f3] p-2">
-                    <input type="text" placeholder="Search..." className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-92 border border-primary" />
-                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-32 border border-primary">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 bg-[#f3f3f3] p-2">
+                    <input type="text" placeholder="Search..." className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-full sm:w-92 border border-primary" />
+                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-full sm:w-32 border border-primary">
                         <option value="all">All</option>
                         <option value="critical">Critical</option>
                         <option value="high">High</option>
@@ -206,7 +205,8 @@ const Notifications = () => {
                         <option value="low">Low</option>
                     </select>
                 </div>
-                <table className="w-full">
+                <div className="overflow-x-auto">
+                <table className="w-full min-w-[700px]">
                     <thead className="text-left">
                         <tr>
                             <th className="p-4">Description</th>
@@ -231,6 +231,7 @@ const Notifications = () => {
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
             }
 
@@ -238,16 +239,16 @@ const Notifications = () => {
             {tab === "notifications" && 
             
             <div>
-                <div className="flex gap-4 bg-[#f3f3f3] p-2">
-                    <input type="text" placeholder="Search..." className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-92 border border-primary" />
-                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-32 border border-primary">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 bg-[#f3f3f3] p-2">
+                    <input type="text" placeholder="Search..." className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-full sm:w-92 border border-primary" />
+                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-full sm:w-32 border border-primary">
                         <option value="all">All</option>
                         <option value="critical">Critical</option>
                         <option value="high">High</option>
                         <option value="medium">Medium</option>
                         <option value="low">Low</option>
                     </select>
-                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-32 border border-primary">
+                    <select className="p-2 text-sm focus:outline-1 focus:outline-accent rounded-md w-full sm:w-32 border border-primary">
                         <option value="all">Contracts</option>
                         <option value="critical">General Notification</option>
                         <option value="high">Learning</option>
@@ -257,7 +258,8 @@ const Notifications = () => {
                         <option value="low">Work</option>
                     </select>
                 </div>
-                <table className="w-full">
+                <div className="overflow-x-auto">
+                <table className="w-full min-w-[700px]">
                     <thead className="text-left">
                         <tr>
                             <th className="p-4 w-[45%]">Description</th>
@@ -280,6 +282,7 @@ const Notifications = () => {
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
             }
         </div>

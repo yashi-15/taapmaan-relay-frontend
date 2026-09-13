@@ -199,17 +199,18 @@ function StopInstructions({ stop }: { stop: Stop }) {
 
 function StopsTable({ stops }: { stops: Stop[] }) {
   return (
-    <div className="bg-white">
-      <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 px-4 py-2 border-b border-gray-200 text-[12px] font-semibold text-gray-600">
-        <div>Stop</div>
-        <div>Equipment</div>
-        <div>Arrival</div>
-        <div>Departure</div>
-      </div>
-      <div className="divide-y divide-gray-100 font-medium">
-        {stops.map((stop) => (
-          <div key={stop.id} className="px-4 py-3">
-            <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 items-start">
+    <div className="bg-white overflow-x-auto">
+      <div className="min-w-[640px]">
+        <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 px-4 py-2 border-b border-gray-200 text-[12px] font-semibold text-gray-600">
+          <div>Stop</div>
+          <div>Equipment</div>
+          <div>Arrival</div>
+          <div>Departure</div>
+        </div>
+        <div className="divide-y divide-gray-100 font-medium">
+          {stops.map((stop) => (
+            <div key={stop.id} className="px-4 py-3">
+              <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 items-start">
               <div className="flex items-start gap-2 min-w-0">
                 <StopBadge sequence={stop.sequence} />
                 <div className="min-w-0">
@@ -225,6 +226,7 @@ function StopsTable({ stops }: { stops: Stop[] }) {
             <StopInstructions stop={stop} />
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
@@ -408,7 +410,8 @@ function TripCard({ trip, onAccept }: { trip: Trip; onAccept: (trip: Trip) => vo
           <ChevronRight size={16} className="text-gray-400 shrink-0" />
         )}
 
-        <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center flex-1 min-w-0 font-medium">
+        <div className="flex-1 min-w-0 overflow-x-auto">
+        <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center min-w-[820px] font-medium">
           <div>
             <div className="text-[14px] font-semibold text-secondary">{trip.contractCode}</div>
             <div className="text-[11.5px] text-gray-400">Expires in --</div>
@@ -467,6 +470,7 @@ function TripCard({ trip, onAccept }: { trip: Trip; onAccept: (trip: Trip) => vo
           ) : (
             <StopProgressStrip trip={trip} />
           )}
+        </div>
         </div>
       </div>
 

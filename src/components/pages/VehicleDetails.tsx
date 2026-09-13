@@ -156,13 +156,13 @@ const VehicleDetails: React.FC = () => {
                 </div>
             </div>
 
-            <div className="flex gap-1 border-b border-slate-200">
+                        <div className="flex gap-1 border-b border-slate-200 overflow-x-auto no-scrollbar">
                 {TABS.map((tab) => (
                     <button
                         key={tab.key}
                         type="button"
                         onClick={() => setActiveTab(tab.key)}
-                        className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+                        className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
                             activeTab === tab.key
                                 ? "border-primary text-primary"
                                 : "border-transparent text-zinc-500 hover:text-zinc-700"

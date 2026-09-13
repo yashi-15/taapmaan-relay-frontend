@@ -147,7 +147,7 @@ const Vehicles: React.FC = () => {
 
     return (
         <div className="py-1 sm:py-3 flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center items-stretch justify-between gap-3 border-b border-slate-200 pb-3">
                 <div>
                     <h2 className="text-lg font-semibold text-zinc-900">Vehicles</h2>
                     <p className="text-xs text-zinc-500 mt-0.5">Manage your fleet and keep vehicle documents up to date.</p>
@@ -159,7 +159,7 @@ const Vehicles: React.FC = () => {
                         setStatusMessage(null);
                         setShowForm((s) => !s);
                     }}
-                    className="py-2 px-4 text-sm font-semibold bg-primary hover:bg-primary/90 text-white rounded-xl shadow-sm transition-all transform active:scale-95"
+                    className="self-start sm:self-auto py-2 px-4 text-sm font-semibold bg-primary hover:bg-primary/90 text-white rounded-xl shadow-sm transition-all transform active:scale-95"
                 >
                     {showForm ? "Cancel" : "Add Vehicle"}
                 </button>
@@ -304,7 +304,8 @@ const Vehicles: React.FC = () => {
                     </button>
                 </div>
             ) : (
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                <div className="overflow-x-auto">
+                <div className="min-w-[900px] border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b border-slate-200 bg-slate-50/70 text-zinc-600">
@@ -349,6 +350,7 @@ const Vehicles: React.FC = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
                 </div>
             )}
         </div>

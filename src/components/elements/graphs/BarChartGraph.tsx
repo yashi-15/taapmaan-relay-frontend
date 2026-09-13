@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const BarChartGraph: React.FC = () => {
   const data = [
@@ -13,22 +13,19 @@ const BarChartGraph: React.FC = () => {
   ];
 
   return (
-    <BarChart
-      style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 2.418 }}
-      responsive
-      data={data}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
-    >
-      <XAxis dataKey="month" />
-      <YAxis width="auto" />
-      <Tooltip />
-      <Bar dataKey="amount" fill="#54b5e3" activeBar={{ fill: '#a6e7f8' }} radius={[6, 6, 0, 0]} />
-    </BarChart>
+    <div style={{ width: '100%', maxWidth: '700px', height: 260 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={data}
+          margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+        >
+          <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+          <YAxis width={40} tick={{ fontSize: 11 }} />
+          <Tooltip />
+          <Bar dataKey="amount" fill="#54b5e3" activeBar={{ fill: '#a6e7f8' }} radius={[6, 6, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

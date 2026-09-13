@@ -163,7 +163,7 @@ export default function Drivers() {
   return (
     <div className="relative w-full bg-white font-sans" style={{ fontFamily: "Inter, system-ui, sans-serif" }}>
       {/* Section header */}
-      <div className="flex items-start justify-between gap-4 border-b border-[#E2E6E8] px-6 py-5">
+            <div className="flex flex-col sm:flex-row sm:items-start items-stretch justify-between gap-4 border-b border-[#E2E6E8] px-4 sm:px-6 py-5">
         <div>
           <h2 className="text-[20px] font-semibold text-[#14181B]">Drivers</h2>
           <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#5B6670]">
@@ -337,8 +337,7 @@ export default function Drivers() {
         </div>
 
         {drivers.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-[3px] border border-dashed border-[#E2E6E8] py-16 text-center">
-            <UserRound size={28} className="mb-3 text-[#8A9299]" strokeWidth={1.5} />
+<div className="flex flex-col items-center justify-center rounded-[3px] border border-dashed border-[#E2E6E8] py-16 text-center">            <UserRound size={28} className="mb-3 text-[#8A9299]" strokeWidth={1.5} />
             <p className="text-[14px] font-medium text-[#14181B]">No drivers onboarded yet</p>
             <p className="mt-1 max-w-xs text-[13px] text-[#5B6670]">
               Onboard a driver to assign them to trips and vehicles. They'll stay in
@@ -346,7 +345,8 @@ export default function Drivers() {
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-[3px] border border-[#E2E6E8]">
+          <div className="overflow-x-auto">
+          <div className="min-w-[900px] overflow-hidden rounded-[3px] border border-[#E2E6E8]">
             <div className="grid grid-cols-[1.6fr_1.3fr_1.3fr_1fr_1.2fr_1.2fr_70px] gap-3 border-b border-[#E2E6E8] bg-[#F6F7F8] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-[#5B6670]">
               <div>Driver</div>
               <div>License</div>
@@ -357,10 +357,8 @@ export default function Drivers() {
               <div />
             </div>
             {drivers.map((d) => (
-              <div
-                key={d.id}
-                className="grid grid-cols-[1.6fr_1.3fr_1.3fr_1fr_1.2fr_1.2fr_70px] items-center gap-3 border-b border-[#E2E6E8] px-4 py-3 text-[13px] text-[#14181B] last:border-b-0 hover:bg-[#FAFBFB]"
-              >
+                            <div key={d.id} className="grid grid-cols-[1.6fr_1.3fr_1.3fr_1fr_1.2fr_1.2fr_70px] items-center gap-3 border-b border-[#E2E6E8] px-4 py-3 text-[13px] text-[#14181B] last:border-b-0 hover:bg-[#FAFBFB]">
+
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F6F7F8] text-[11px] font-semibold text-[#5B6670]">
                     {initials(d.firstName, d.lastName)}
@@ -416,6 +414,7 @@ export default function Drivers() {
                 </div>
               </div>
             ))}
+          </div>
           </div>
         )}
       </div>
