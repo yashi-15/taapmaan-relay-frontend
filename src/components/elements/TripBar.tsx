@@ -22,7 +22,6 @@ import {
   type InstructionType,
 } from "../../utils/tripslistMock";
 import { useNavigate } from "react-router-dom";
-import { FaEye } from "react-icons/fa6";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 
 /**
