@@ -41,7 +41,7 @@ const Layout: React.FC = () => {
         }
     };
 
-    const displayName = user?.name || user?.companyName || "Vendor User";
+    const displayName = user?.name || "Vendor User";
     const displayEmail = user?.email || "user@taapmaan.in";
     const initials = displayName.substring(0, 2).toUpperCase();
 

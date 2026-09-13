@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import logo from "../../assets/logo.png";
-import authAPI from "../../api/vendor.api";
-import type { CreateVendorPayload, CreateVendorResponse, OnboardingSource } from "../types/vendorPayload";
+import type { CreateVendorPayload, OnboardingSource } from "../types/vendorPayload";
 import { useNavigate } from "react-router-dom";
 
 const AVAILABLE_DOMICILES = ["Mumbai", "Pune", "Nashik", "Delhi NCR", "Bengaluru", "Chennai"];
@@ -58,7 +56,7 @@ const initialFormState: CreateVendorFormState = {
 type StatusMessage = { type: "success" | "error"; text: string } | null;
 
 const CreateVendor = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<CreateVendorFormState>(initialFormState);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
     const [statusMessage, setStatusMessage] = useState<StatusMessage>(null);
@@ -105,6 +103,9 @@ const CreateVendor = () => {
         return errors;
     };
 
+    // Purely local "create" — no backend call. Builds the payload only to
+    // keep the shape honest (and so it's ready to wire up later), then just
+    // simulates success and sends the user back to login.
     const handleCreateVendor = async (e: React.FormEvent) => {
         e.preventDefault();
         const errors = validate();
@@ -141,26 +142,17 @@ const CreateVendor = () => {
             bankDetails: formData.bankDetails,
         };
 
-        try {
-            const response = await authAPI.create(payload);
-            setStatusMessage({ type: "success", text: response.data.message || "Vendor created successfully." });
-            setFormData(initialFormState);
-            navigate("/login");
-        } catch (error) {
-            if (axios.isAxiosError<CreateVendorResponse>(error) && error.response?.data) {
-                const data = error.response.data;
-                if (data.errors?.length) {
-                    const errs: Record<string, string> = {};
-                    data.errors.forEach((fe) => { errs[fe.field] = fe.message; });
-                    setFieldErrors(errs);
-                }
-                setStatusMessage({ type: "error", text: data.message || data.error || "Failed to create vendor." });
-            } else {
-                setStatusMessage({ type: "error", text: "Something went wrong. Please try again." });
-            }
-        } finally {
-            setIsSaving(false);
-        }
+        // Not sent anywhere — just here so this still compiles against the
+        // real payload shape and logs what would have been submitted.
+        console.log("Fake vendor creation payload (not sent to any backend):", payload);
+
+        // Simulate a brief save delay so the spinner still makes sense.
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        setStatusMessage({ type: "success", text: "Vendor created successfully." });
+        setFormData(initialFormState);
+        setIsSaving(false);
+        navigate("/login");
     };
 
     return (
