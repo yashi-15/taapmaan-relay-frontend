@@ -20,7 +20,10 @@ import {
   type StopStatus,
   type TripStatus,
   type InstructionType,
-} from "../../utils/tripsMock";
+} from "../../utils/tripslistMock";
+import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa6";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 
 /**
  * TripList
@@ -211,22 +214,22 @@ function StopsTable({ stops }: { stops: Stop[] }) {
           {stops.map((stop) => (
             <div key={stop.id} className="px-4 py-3">
               <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-4 items-start">
-              <div className="flex items-start gap-2 min-w-0">
-                <StopBadge sequence={stop.sequence} />
-                <div className="min-w-0">
-                  <div className="text-[13.5px] font-medium text-gray-900">{stop.code}</div>
-                  <div className="text-[12px] text-gray-500 truncate">{stop.company}</div>
-                  <div className="text-[12px] text-gray-500 truncate">{stop.address}</div>
+                <div className="flex items-start gap-2 min-w-0">
+                  <StopBadge sequence={stop.sequence} />
+                  <div className="min-w-0">
+                    <div className="text-[13.5px] font-medium text-gray-900">{stop.code}</div>
+                    <div className="text-[12px] text-gray-500 truncate">{stop.company}</div>
+                    <div className="text-[12px] text-gray-500 truncate">{stop.address}</div>
+                  </div>
                 </div>
+                <div className="text-[13px] text-gray-700 pt-0.5">{stop.equipment}</div>
+                <div className="text-[13px] text-gray-700 pt-0.5">{stop.arrival}</div>
+                <div className="text-[13px] text-gray-700 pt-0.5">{stop.departure}</div>
               </div>
-              <div className="text-[13px] text-gray-700 pt-0.5">{stop.equipment}</div>
-              <div className="text-[13px] text-gray-700 pt-0.5">{stop.arrival}</div>
-              <div className="text-[13px] text-gray-700 pt-0.5">{stop.departure}</div>
+              <StopInstructions stop={stop} />
             </div>
-            <StopInstructions stop={stop} />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -372,9 +375,8 @@ function AssignmentModal({
             type="button"
             disabled={!canConfirm}
             onClick={() => driverId && vehicleId && onConfirm(driverId, vehicleId)}
-            className={`text-[13.5px] font-medium px-5 py-2 rounded text-white ${
-              canConfirm ? "bg-primary" : "bg-gray-300 cursor-not-allowed"
-            }`}
+            className={`text-[13.5px] font-medium px-5 py-2 rounded text-white ${canConfirm ? "bg-primary" : "bg-gray-300 cursor-not-allowed"
+              }`}
           >
             Confirm assignment
           </button>
@@ -397,6 +399,8 @@ function TripCard({ trip, onAccept }: { trip: Trip; onAccept: (trip: Trip) => vo
   const lastStop = trip.stops[trip.stops.length - 1];
   const isPending = trip.status === "Pending";
 
+  const navigate = useNavigate();
+
   return (
     <div className="border border-gray-200 rounded-md bg-white overflow-hidden mb-2">
       {/* trip summary header (click to expand/collapse into the stops table) */}
@@ -411,66 +415,77 @@ function TripCard({ trip, onAccept }: { trip: Trip; onAccept: (trip: Trip) => vo
         )}
 
         <div className="flex-1 min-w-0 overflow-x-auto">
-        <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr] gap-4 items-center min-w-[820px] font-medium">
-          <div>
-            <div className="text-[14px] font-semibold text-secondary">{trip.contractCode}</div>
-            <div className="text-[11.5px] text-gray-400">Expires in --</div>
-            <div className="text-[11.5px] text-gray-400">Contract</div>
-          </div>
-
-          <div className="flex items-center gap-2 min-w-0">
-            <StopBadge sequence={trip.stops[0]?.sequence ?? 1} />
-            <div className="min-w-0">
-              <div className="text-[13px] text-gray-800 truncate">{trip.origin}</div>
-              <div className="text-[11.5px] text-gray-400">{trip.startTime}</div>
+          <div className="grid grid-cols-[1.2fr_2fr_2fr_0.9fr_1.3fr_1fr_1.3fr_0.6fr] gap-4 items-center min-w-[820px] font-medium">
+            <div>
+              <div className="text-[14px] font-semibold text-secondary">{trip.contractCode}</div>
+              <div className="text-[11.5px] text-gray-400">Expires in --</div>
+              <div className="text-[11.5px] text-gray-400">Contract</div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2 min-w-0">
-            <ArrowRightLeft size={14} className="text-gray-400 shrink-0" />
-            <StopBadge sequence={lastStop?.sequence ?? trip.stops.length} />
-            <div className="min-w-0">
-              <div className="text-[13px] text-gray-800 truncate">{trip.destination}</div>
-              <div className="text-[11.5px] text-gray-400">{trip.endTime}</div>
+            <div className="flex items-center gap-2 min-w-0">
+              <StopBadge sequence={trip.stops[0]?.sequence ?? 1} />
+              <div className="min-w-0">
+                <div className="text-[13px] text-gray-800 truncate">{trip.origin}</div>
+                <div className="text-[11.5px] text-gray-400">{trip.startTime}</div>
+              </div>
             </div>
-          </div>
 
-          <div className="text-[13px] text-gray-700">
-            <div>{trip.totalDistance} km</div>
-            <div className="text-[11.5px] text-gray-400">{trip.totalDuration}</div>
-          </div>
-
-          <div className="text-[13px] text-gray-700">
-            <div>{trip.equipment}</div>
-            <div className={`text-[12px] font-medium ${statusTextClass[trip.status]}`}>
-              {trip.status}
+            <div className="flex items-center gap-2 min-w-0">
+              <ArrowRightLeft size={14} className="text-gray-400 shrink-0" />
+              <StopBadge sequence={lastStop?.sequence ?? trip.stops.length} />
+              <div className="min-w-0">
+                <div className="text-[13px] text-gray-800 truncate">{trip.destination}</div>
+                <div className="text-[11.5px] text-gray-400">{trip.endTime}</div>
+              </div>
             </div>
-          </div>
 
-          <div className="text-right">
-            <div className="text-[15px] font-semibold text-gray-900">
-              {formatCurrency(trip.amount)}
+            <div className="text-[13px] text-gray-700">
+              <div>{trip.totalDistance} km</div>
+              <div className="text-[11.5px] text-gray-400">{trip.totalDuration}</div>
             </div>
-            <div className="text-[11.5px] text-gray-400">
-              {formatCurrency(trip.pricePerKm)}/km
-            </div>
-          </div>
 
-          {isPending ? (
+            <div className="text-[13px] text-gray-700">
+              <div>{trip.equipment}</div>
+              <div className={`text-[12px] font-medium ${statusTextClass[trip.status]}`}>
+                {trip.status}
+              </div>
+            </div>
+
+            <div className="text-right">
+              <div className="text-[15px] font-semibold text-gray-900">
+                {formatCurrency(trip.amount)}
+              </div>
+              <div className="text-[11.5px] text-gray-400">
+                {formatCurrency(trip.pricePerKm)}/km
+              </div>
+            </div>
+
+            {isPending ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAccept(trip);
+                }}
+                className="justify-self-end bg-primary text-white text-[13.5px] font-medium px-5 py-2 rounded"
+              >
+                Accept
+              </button>
+            ) : (
+              <StopProgressStrip trip={trip} />
+            )}
+
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onAccept(trip);
+                navigate(`/dashboard/trips/${trip.id}`, { state: { trip } });
               }}
-              className="justify-self-end bg-primary text-white text-[13.5px] font-medium px-5 py-2 rounded"
+              className="text-xs font-semibold text-primary hover:underline"
             >
-              Accept
+              <FaArrowAltCircleRight size={28} className="inline-block mr-1" />
             </button>
-          ) : (
-            <StopProgressStrip trip={trip} />
-          )}
-        </div>
+          </div>
         </div>
       </div>
 

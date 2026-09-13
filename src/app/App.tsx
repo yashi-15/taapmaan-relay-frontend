@@ -14,6 +14,7 @@ import VehicleDetails from "../components/pages/VehicleDetails";
 import Payments from "../components/pages/Payments";
 import LoadBoard from "../components/pages/LoadBoard";
 import Drivers from "../components/pages/Drivers";
+import TripDetails from "../components/pages/TripDetails";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="trips" element={<Trips />} />
+            <Route path="trips/:id" element={<TripDetails />} />
             <Route path="load-board" element={<LoadBoard  />} />
             <Route path="scorecard" element={<ComingSoon />} />
             <Route path="vehicles" element={<Vehicles />} />

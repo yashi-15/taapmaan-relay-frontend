@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import TripBar from '../elements/TripBar'
-import { trips } from '../../utils/tripsMock'
+import { trips } from '../../utils/tripslistMock'
 
 const Trips = () => {
 
